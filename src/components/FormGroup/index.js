@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { Container } from './styles';
 
-export default function FormGroup({ children, error }) {
+export default function FormGroup({ children, error, groupType }) {
   return (
-    <Container>
+    <Container groupType={groupType}>
       {children}
       {error && <small>{error}</small> }
     </Container>
@@ -13,8 +13,10 @@ export default function FormGroup({ children, error }) {
 FormGroup.propTypes = {
   children: PropTypes.node.isRequired,
   error: PropTypes.string,
+  groupType: PropTypes.string,
 };
 
 FormGroup.defaultProps = {
   error: null,
+  groupType: null,
 };

@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
+  ${({ groupType }) => groupType === 'select' && css`
+    display: grid;
+  `}
+
   & + & {
     margin-top: 16px;
   }

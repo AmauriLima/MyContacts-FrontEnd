@@ -5,7 +5,7 @@ import isEmailValid from '../../utils/isEmailValid';
 import formatPhone from '../../utils/formatPhone';
 import useErrors from '../../hooks/useErrors';
 
-import { Form, ButtonContainer } from './styles';
+import { Form, ButtonContainer, ArrowDown } from './styles';
 
 import FormGroup from '../FormGroup';
 import Input from '../Input';
@@ -89,7 +89,7 @@ export default function ContactForm({ buttonLabel }) {
         />
       </FormGroup>
 
-      <FormGroup>
+      <FormGroup groupType="select">
         <Select
           value={category}
           onChange={(event) => setCategory(event.target.value)}
@@ -98,6 +98,7 @@ export default function ContactForm({ buttonLabel }) {
           <option value="instagram">Instagram</option>
           <option value="discord">Discord</option>
         </Select>
+        <ArrowDown />
       </FormGroup>
 
       <ButtonContainer>

@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export default styled.select`
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+
   width: 100%;
   background-color: #fff;
   height: 52px;
