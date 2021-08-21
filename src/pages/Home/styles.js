@@ -71,6 +71,14 @@ export const ListContainer = styled.div`
       border: none;
       display: flex;
       align-items: center;
+
+      img {
+        transition: 200ms;
+      }
+
+      img.asc {
+        transform: rotateX(180deg);
+      }
     }
 
     span {
@@ -78,6 +86,7 @@ export const ListContainer = styled.div`
       color: ${({ theme }) => theme.colors.primary.main};
       font-weight: 700;
     }
+
   }
   `;
 
