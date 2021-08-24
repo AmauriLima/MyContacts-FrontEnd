@@ -61,34 +61,28 @@ export const Header = styled.header`
   }
 `;
 
-export const ListContainer = styled.div`
+export const ListHeader = styled.header`
   margin-top: 16px;
+  margin-bottom: 8px;
 
-  header {
-    margin-bottom: 8px;
-    button {
-      background: transparent;
-      border: none;
-      display: flex;
-      align-items: center;
+  button {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
 
-      img {
-        transition: 200ms;
-      }
-
-      img.asc {
-        transform: rotateX(180deg);
-      }
+    img {
+      transition: transform .2s ease-in;
+      transform: ${({ orderBy }) => (orderBy === 'asc' ? 'rotateX(540deg) rotateY(360deg)' : 'rotate(0deg)')};
     }
-
-    span {
-      margin-right: 8px;
-      color: ${({ theme }) => theme.colors.primary.main};
-      font-weight: 700;
-    }
-
   }
-  `;
+
+  span {
+    margin-right: 8px;
+    color: ${({ theme }) => theme.colors.primary.main};
+    font-weight: 700;
+  }
+`;
 
 export const Card = styled.div`
   background: #fff;

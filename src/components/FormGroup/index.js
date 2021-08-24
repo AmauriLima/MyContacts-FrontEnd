@@ -5,7 +5,7 @@ export default function FormGroup({ children, error, groupType }) {
   return (
     <Container groupType={groupType}>
       {children}
-      {error && <small>{error}</small> }
+      {error && <small>{error}</small>}
     </Container>
   );
 }

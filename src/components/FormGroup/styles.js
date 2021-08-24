@@ -15,6 +15,4 @@ export const Container = styled.div`
     display: block;
     margin-top: 8px;
   }
-
-
 `;
