@@ -67,15 +67,17 @@ export default function ContactForm({
       ? { endpoint: `contacts/${id}`, method: 'PUT' }
       : { endpoint: 'contacts', method: 'POST' };
 
+    const body = JSON.stringify({
+      name,
+      email,
+      phone,
+      category_id: category || null,
+    });
+
     fetch(`http://localhost:3001/${endpoint}`, {
       method,
       headers: new Headers({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({
-        name,
-        email,
-        phone,
-        category_id: category || null,
-      }),
+      body,
     });
   }
 
