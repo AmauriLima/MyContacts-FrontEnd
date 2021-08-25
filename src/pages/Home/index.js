@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
 import formatPhone from '../../utils/formatPhone';
+import delay from '../../utils/delay';
 
 import {
   Card, Container, Header, InputSearchContainer, ListHeader,
@@ -14,20 +15,25 @@ import trash from '../../assets/images/icons/trash.svg';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [orderBy, setOrderBy] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
     (contact.name.toLowerCase()).includes(searchTerm.toLowerCase())
   )), [searchTerm, contacts]);
 
   useEffect(() => {
+    setIsLoading(true);
+
     fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
       .then(async (response) => {
+        await delay(500);
         const json = await response.json();
         setContacts(json);
-        setLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [orderBy]);
 
@@ -43,7 +49,7 @@ export default function Home() {
 
   return (
     <Container>
-      {loading && (<Loader />) }
+      <Loader isLoading={isLoading} />
       <InputSearchContainer>
         <input
           value={searchTerm}

@@ -28,7 +28,7 @@ export default function EditContact() {
         const contact = await response.json();
         setAllStates(contact);
       });
-  });
+  }, [name]);
 
   return (
     <>
