@@ -17,8 +17,12 @@ class ContactsService {
     return this.httpClient.get('/categories');
   }
 
-  async createContact(endpoint, method, headers, body) {
-    this.httpClient.post(endpoint, method, headers, body);
+  async createContact({
+    path, method, headers, body,
+  }) {
+    this.httpClient.post({
+      path, method, headers, body,
+    });
   }
 }
 

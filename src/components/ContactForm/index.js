@@ -60,7 +60,9 @@ export default function ContactForm({
       category_id: category || null,
     });
 
-    ContactsService.createContact(endpoint, method, headers, body);
+    ContactsService.createContact({
+      path: endpoint, method, headers, body,
+    });
   }
 
   return (

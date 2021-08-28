@@ -11,7 +11,9 @@ class HttpClient {
     return response.json();
   }
 
-  post(path, method, headers, body) {
+  post({
+    path, method, headers, body,
+  }) {
     fetch(`${this.baseUrl}${path}`, {
       method,
       headers,
