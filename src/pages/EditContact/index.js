@@ -5,30 +5,40 @@ import PageHeader from '../../components/PageHeader';
 import ContactForm from '../../components/ContactForm';
 import Loader from '../../components/Loader';
 
+import formatPhone from '../../utils/formatPhone';
+import ContactsService from '../../services/ContactsService';
+
 export default function EditContact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { id } = useParams();
 
   function setAllStates(contact) {
     setName(contact.name);
     setEmail(contact.email);
-    setPhone(contact.phone);
+    setPhone(formatPhone(contact.phone));
     setCategory(contact.category_id || '');
-    setLoading(false);
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3001/contacts/${id}`)
-      .then(async (response) => {
-        const contact = await response.json();
+    async function loadContact() {
+      try {
+        setIsLoading(true);
+        const contact = await ContactsService.getContact(id);
         setAllStates(contact);
-      });
-  }, [name]);
+      } catch (error) {
+        console.log('error', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadContact();
+  }, [id]);
 
   return (
     <>
@@ -36,8 +46,8 @@ export default function EditContact() {
         title={`Editar ${name}`}
       />
 
-      {loading
-        ? <Loader />
+      {isLoading
+        ? <Loader isLoading={isLoading} />
         : (
           <ContactForm
             buttonLabel="Salvar alterações"

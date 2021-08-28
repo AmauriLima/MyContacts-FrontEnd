@@ -10,6 +10,14 @@ class HttpClient {
     await delay(500);
     return response.json();
   }
+
+  post(path, method, headers, body) {
+    fetch(`${this.baseUrl}${path}`, {
+      method,
+      headers,
+      body,
+    });
+  }
 }
 
 export default HttpClient;
