@@ -21,10 +21,7 @@ class HttpClient {
       return body;
     }
 
-    // Optional chaining
-    throw new APIError(
-      body?.error || `${response.status} - ${response.statusText}`,
-    );
+    throw new APIError(response, body);
   }
 
   post({
