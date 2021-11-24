@@ -31,7 +31,7 @@ export default function EditContact() {
         const contact = await ContactsService.getContact(id);
         setAllStates(contact);
       } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
       } finally {
         setIsLoading(false);
       }

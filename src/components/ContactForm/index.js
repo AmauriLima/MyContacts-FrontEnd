@@ -38,7 +38,7 @@ export default function ContactForm({
         const response = await ContactsService.listCategories();
         setCategories(response);
       } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
       }
     }
     listCategories();
