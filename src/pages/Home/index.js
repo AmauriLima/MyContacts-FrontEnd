@@ -6,7 +6,14 @@ import {
 import formatPhone from '../../utils/formatPhone';
 
 import {
-  Card, Container, EmptyListContainer, ErrorContainer, Header, InputSearchContainer, ListHeader,
+  Card,
+  Container,
+  EmptyListContainer,
+  ErrorContainer,
+  Header,
+  InputSearchContainer,
+  ListHeader,
+  SearchNotFoundContainer,
 } from './styles';
 
 import Loader from '../../components/Loader';
@@ -17,6 +24,7 @@ import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
 import sad from '../../assets/images/sad.svg';
 import emptyBox from '../../assets/images/emptyBox.svg';
+import magnifierQuestion from '../../assets/images/magnifierQuestion.svg';
 
 import ContactsService from '../../services/ContactsService';
 
@@ -123,12 +131,21 @@ export default function Home() {
           )}
 
           {filteredContacts.length !== 0 && (
-          <ListHeader orderBy={orderBy}>
-            <button type="button" onClick={handleToggleOrderBy}>
-              <span>Nome</span>
-              <img src={arrow} alt="Arrow" />
-            </button>
-          </ListHeader>
+            <ListHeader orderBy={orderBy}>
+              <button type="button" onClick={handleToggleOrderBy}>
+                <span>Nome</span>
+                <img src={arrow} alt="Arrow" />
+              </button>
+            </ListHeader>
+          )}
+
+          {(contacts.length > 0 && filteredContacts.length < 1) && (
+            <SearchNotFoundContainer>
+              <img src={magnifierQuestion} alt="magnifierQuestion" />
+              <span>
+                Nenhum resultado foi encontrado para <strong>{searchTerm}</strong>
+              </span>
+            </SearchNotFoundContainer>
           )}
 
           {filteredContacts.map((contact) => (
