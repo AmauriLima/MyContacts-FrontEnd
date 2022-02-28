@@ -13,16 +13,12 @@ class ContactsService {
     return this.httpClient.get(`/contacts/${contactId}`);
   }
 
-  async listCategories() {
-    return this.httpClient.get('/categories');
+  async createContact({ body }) {
+    this.httpClient.post({ path: '/contacts', body });
   }
 
-  async createContact({
-    path, method, headers, body,
-  }) {
-    this.httpClient.post({
-      path, method, headers, body,
-    });
+  async updateContact({ body, id }) {
+    this.httpClient.put({ path: `/contacts/${id}`, body });
   }
 }
 

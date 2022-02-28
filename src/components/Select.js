@@ -21,7 +21,13 @@ export default styled.select`
   appearance: none;
 
   transition: border-color 200ms ease-in;
+
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary.main};
+  }
+
+  &[disabled] {
+    background-color: ${({ theme }) => theme.colors.gray[100]};
+    border-color: ${({ theme }) => theme.colors.gray[200]};
   }
 `;

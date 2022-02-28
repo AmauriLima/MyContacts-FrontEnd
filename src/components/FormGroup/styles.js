@@ -1,10 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
-  ${({ groupType }) => groupType === 'select' && css`
-    display: grid;
-  `}
-
   & + & {
     margin-top: 16px;
   }
@@ -14,5 +10,15 @@ export const Container = styled.div`
     font-size: 12px;
     display: block;
     margin-top: 8px;
+  }
+
+  .form-item {
+    position: relative;
+
+    .loader {
+      position: absolute;
+      top: 18px;
+      right: 16px;
+    }
   }
 `;

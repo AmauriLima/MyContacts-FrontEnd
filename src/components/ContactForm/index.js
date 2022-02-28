@@ -2,20 +2,22 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Form, ButtonContainer, ArrowDown } from './styles';
+import { Form, ButtonContainer } from './styles';
 
 import FormGroup from '../FormGroup';
 import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
-import ContactsService from '../../services/ContactsService';
 import UseForms from '../../hooks/useForms';
+import ContactsService from '../../services/ContactsService';
+import CategoriesService from '../../services/CategoriesService';
 
 export default function ContactForm({
   buttonLabel, contactName, contactEmail, contactPhone, contactCategory,
 }) {
   const [category, setCategory] = useState(contactCategory);
   const [categories, setCategories] = useState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
   const { id } = useParams();
 
@@ -35,10 +37,10 @@ export default function ContactForm({
   useEffect(() => {
     async function listCategories() {
       try {
-        const response = await ContactsService.listCategories();
+        const response = await CategoriesService.listCategories();
         setCategories(response);
-      } catch (error) {
-        // console.log('error', error);
+      } catch {} finally {
+        setIsLoadingCategories(false);
       }
     }
     listCategories();
@@ -47,22 +49,24 @@ export default function ContactForm({
   function handleSubmit(event) {
     event.preventDefault();
 
-    const { endpoint, method } = id
-      ? { endpoint: `/contacts/${id}`, method: 'PUT' }
-      : { endpoint: '/contacts', method: 'POST' };
+    const method = id
+      ? 'PUT'
+      : 'POST';
 
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-
-    const body = JSON.stringify({
+    const body = {
       name,
       email,
       phone,
       category_id: category || null,
-    });
+    };
 
-    ContactsService.createContact({
-      path: endpoint, method, headers, body,
-    });
+    if (method === 'POST') {
+      ContactsService.createContact({ body });
+      return;
+    }
+    if (method === 'PUT') {
+      ContactsService.updateContact({ body, id });
+    }
   }
 
   return (
@@ -95,17 +99,17 @@ export default function ContactForm({
         />
       </FormGroup>
 
-      <FormGroup groupType="select">
+      <FormGroup isLoading={isLoadingCategories}>
         <Select
           value={category}
           onChange={(event) => setCategory(event.target.value)}
+          disabled={isLoadingCategories}
         >
           <option value="">Categoria</option>
           {categories.map((categoryItem) => (
             <option key={categoryItem.id} value={categoryItem.id}>{categoryItem.name}</option>
           ))}
         </Select>
-        <ArrowDown />
       </FormGroup>
 
       <ButtonContainer>
