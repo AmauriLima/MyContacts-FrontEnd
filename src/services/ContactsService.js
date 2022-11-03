@@ -14,7 +14,7 @@ class ContactsService {
   }
 
   async createContact({ body }) {
-    return this.httpClient.post({ path: '/contacts', body });
+    return this.httpClient.post('/contacts', { body });
   }
 
   async updateContact({ body, id }) {
