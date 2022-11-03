@@ -14,11 +14,11 @@ class ContactsService {
   }
 
   async createContact({ body }) {
-    this.httpClient.post({ path: '/contacts', body });
+    return this.httpClient.post({ path: '/contacts', body });
   }
 
   async updateContact({ body, id }) {
-    this.httpClient.put({ path: `/contacts/${id}`, body });
+    return this.httpClient.put({ path: `/contacts/${id}`, body });
   }
 }
 

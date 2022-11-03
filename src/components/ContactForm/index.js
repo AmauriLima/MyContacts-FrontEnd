@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import { Form, ButtonContainer } from './styles';
 
@@ -9,17 +8,14 @@ import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
 import UseForms from '../../hooks/useForms';
-import ContactsService from '../../services/ContactsService';
 import CategoriesService from '../../services/CategoriesService';
 
 export default function ContactForm({
-  buttonLabel, contactName, contactEmail, contactPhone, contactCategory,
+  buttonLabel, contactName, contactEmail, contactPhone, contactCategory, onSubmit,
 }) {
   const [category, setCategory] = useState(contactCategory);
   const [categories, setCategories] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
-
-  const { id } = useParams();
 
   const {
     errors,
@@ -49,10 +45,6 @@ export default function ContactForm({
   function handleSubmit(event) {
     event.preventDefault();
 
-    const method = id
-      ? 'PUT'
-      : 'POST';
-
     const body = {
       name,
       email,
@@ -60,13 +52,7 @@ export default function ContactForm({
       category_id: category || null,
     };
 
-    if (method === 'POST') {
-      ContactsService.createContact({ body });
-      return;
-    }
-    if (method === 'PUT') {
-      ContactsService.updateContact({ body, id });
-    }
+    onSubmit({ body });
   }
 
   return (
@@ -124,6 +110,7 @@ export default function ContactForm({
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   contactName: PropTypes.string,
   contactEmail: PropTypes.string,
   contactPhone: PropTypes.string,
