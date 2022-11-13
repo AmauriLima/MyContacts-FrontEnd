@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export default styled.button`
+export const StyledButton = styled.button`
   height: 52px;
   background-color: ${({ theme }) => theme.colors.primary.main};
   color: #fff;
@@ -16,6 +16,9 @@ export default styled.button`
   font-size: 16px;
   font-weight: 700;
   border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   transition: background 200ms ease-in;
 
