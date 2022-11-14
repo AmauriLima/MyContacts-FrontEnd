@@ -25,6 +25,18 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
     errors, setError, removeError, getErrorMessageByFieldName,
   } = useErros();
 
+  useEffect(() => {
+    async function listCategories() {
+      try {
+        const response = await CategoriesService.listCategories();
+        setCategories(response);
+      } catch {} finally {
+        setIsLoadingCategories(false);
+      }
+    }
+    listCategories();
+  }, []);
+
   function clearFields() {
     setName('');
     setEmail('');
@@ -56,18 +68,6 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
   }
 
   const isFormValid = (name && errors.length === 0);
-
-  useEffect(() => {
-    async function listCategories() {
-      try {
-        const response = await CategoriesService.listCategories();
-        setCategories(response);
-      } catch {} finally {
-        setIsLoadingCategories(false);
-      }
-    }
-    listCategories();
-  }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
