@@ -7,28 +7,53 @@ import FormGroup from '../FormGroup';
 import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
-import UseForms from '../../hooks/useForms';
 import CategoriesService from '../../services/CategoriesService';
+import formatPhone from '../../utils/formatPhone';
+import isEmailValid from '../../utils/isEmailValid';
+import useErros from '../../hooks/useErrors';
 
-export default function ContactForm({
-  buttonLabel, contactName, contactEmail, contactPhone, contactCategory, onSubmit,
-}) {
-  const [category, setCategory] = useState(contactCategory);
+export default function ContactForm({ buttonLabel, onSubmit }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [category, setCategory] = useState('');
   const [categories, setCategories] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
-    errors,
-    name,
-    email,
-    phone,
-    getErrorMessageByFieldName,
-    handleNameChange,
-    handleEmailChange,
-    handlePhoneChange,
-    clearFields,
-  } = UseForms({ contactName, contactEmail, contactPhone });
+    errors, setError, removeError, getErrorMessageByFieldName,
+  } = useErros();
+
+  function clearFields() {
+    setName('');
+    setEmail('');
+    setPhone('');
+  }
+
+  function handleNameChange(event) {
+    setName(event.target.value);
+
+    if (!event.target.value) {
+      setError({ field: 'name', message: 'Nome é obrigatório' });
+    } else {
+      removeError('name');
+    }
+  }
+
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+
+    if (event.target.value && !isEmailValid(event.target.value)) {
+      setError({ field: 'email', message: 'E-mail inválido' });
+    } else {
+      removeError('email');
+    }
+  }
+
+  function handlePhoneChange(event) {
+    setPhone(formatPhone(event.target.value));
+  }
 
   const isFormValid = (name && errors.length === 0);
 
@@ -122,15 +147,4 @@ export default function ContactForm({
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  contactName: PropTypes.string,
-  contactEmail: PropTypes.string,
-  contactPhone: PropTypes.string,
-  contactCategory: PropTypes.string,
-};
-
-ContactForm.defaultProps = {
-  contactName: '',
-  contactEmail: '',
-  contactPhone: '',
-  contactCategory: '',
 };
