@@ -27,6 +27,7 @@ export default function ContactForm({
     handleNameChange,
     handleEmailChange,
     handlePhoneChange,
+    clearFields,
   } = UseForms({ contactName, contactEmail, contactPhone });
 
   const isFormValid = (name && errors.length === 0);
@@ -58,6 +59,8 @@ export default function ContactForm({
     await onSubmit({ body });
 
     setIsSubmitting(false);
+    clearFields();
+    setCategory('');
   }
 
   return (

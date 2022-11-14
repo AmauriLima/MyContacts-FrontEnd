@@ -14,6 +14,12 @@ export default function UseForms({
     errors, setError, removeError, getErrorMessageByFieldName,
   } = useErros();
 
+  function clearFields() {
+    setName('');
+    setEmail('');
+    setPhone('');
+  }
+
   function handleNameChange(event) {
     setName(event.target.value);
 
@@ -47,5 +53,6 @@ export default function UseForms({
     handleNameChange,
     handleEmailChange,
     handlePhoneChange,
+    clearFields,
   };
 }
