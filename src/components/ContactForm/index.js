@@ -16,7 +16,7 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [category, setCategory] = useState('');
+  const [categoryId, setCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -78,14 +78,14 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       name,
       email,
       phone,
-      category_id: category || null,
+      categoryId_id: categoryId || null,
     };
 
     await onSubmit({ body });
 
     setIsSubmitting(false);
     clearFields();
-    setCategory('');
+    setCategoryId('');
   }
 
   return (
@@ -123,13 +123,13 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
 
       <FormGroup isLoading={isLoadingCategories}>
         <Select
-          value={category}
-          onChange={(event) => setCategory(event.target.value)}
+          value={categoryId}
+          onChange={(event) => setCategoryId(event.target.value)}
           disabled={isLoadingCategories || isSubmitting}
         >
           <option value="">Categoria</option>
-          {categories.map((categoryItem) => (
-            <option key={categoryItem.id} value={categoryItem.id}>{categoryItem.name}</option>
+          {categories.map((categoryIdItem) => (
+            <option key={categoryIdItem.id} value={categoryIdItem.id}>{categoryIdItem.name}</option>
           ))}
         </Select>
       </FormGroup>
