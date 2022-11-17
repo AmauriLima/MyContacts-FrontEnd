@@ -34,6 +34,12 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
       setPhone(formatPhone(contact.phone) ?? '');
       setCategoryId(contact.category_id ?? '');
     },
+    resetFields: () => {
+      setName('');
+      setEmail('');
+      setPhone('');
+      setCategoryId('');
+    },
   }), []);
 
   useEffect(() => {
@@ -47,12 +53,6 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
     }
     listCategories();
   }, []);
-
-  function clearFields() {
-    // setName('');
-    // setEmail('');
-    // setPhone('');
-  }
 
   function handleNameChange(event) {
     setName(event.target.value);
@@ -95,8 +95,6 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
     await onSubmit({ body });
 
     setIsSubmitting(false);
-    clearFields();
-    setCategoryId('');
   }
 
   return (
