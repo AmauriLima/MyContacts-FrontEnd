@@ -49,9 +49,9 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   }, []);
 
   function clearFields() {
-    setName('');
-    setEmail('');
-    setPhone('');
+    // setName('');
+    // setEmail('');
+    // setPhone('');
   }
 
   function handleNameChange(event) {

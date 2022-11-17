@@ -18,7 +18,7 @@ class ContactsService {
   }
 
   updateContact({ body, id }) {
-    return this.httpClient.put({ path: `/contacts/${id}`, body });
+    return this.httpClient.put(`/contacts/${id}`, { body });
   }
 }
 

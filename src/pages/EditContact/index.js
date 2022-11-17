@@ -9,13 +9,29 @@ import toast from '../../utils/toast';
 
 export default function EditContact() {
   const [isLoading, setIsLoading] = useState(true);
+  const [contactName, setContactName] = useState('');
   const contactFormRef = useRef(null);
-  const [contactName, setContactName] = useState();
 
   const { id } = useParams();
   const history = useHistory();
 
-  function handleSubmit() {}
+  async function handleSubmit({ body }) {
+    try {
+      const updatedContact = await ContactsService.updateContact({ body, id });
+
+      setContactName(updatedContact.name);
+
+      toast({
+        type: 'success',
+        text: 'Contato editado com sucesso.',
+      });
+    } catch {
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao editar o contato.',
+      });
+    }
+  }
 
   useEffect(() => {
     async function loadContact() {
