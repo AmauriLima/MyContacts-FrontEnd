@@ -7,9 +7,9 @@ import toast from '../../utils/toast';
 export default function NewContact() {
   const contactFormRef = useRef(null);
 
-  async function handleSubmit({ body }) {
+  async function handleSubmit(contact) {
     try {
-      await ContactsService.createContact({ body });
+      await ContactsService.createContact({ body: contact });
 
       contactFormRef.current.resetFields();
 

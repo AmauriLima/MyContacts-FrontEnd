@@ -18,9 +18,9 @@ export default function EditContact() {
 
   const safeAsyncAction = useSafeAsyncAction();
 
-  async function handleSubmit({ body }) {
+  async function handleSubmit(contact) {
     try {
-      const updatedContact = await ContactsService.updateContact({ body, id });
+      const updatedContact = await ContactsService.updateContact({ id, body: contact });
 
       setContactName(updatedContact.name);
 

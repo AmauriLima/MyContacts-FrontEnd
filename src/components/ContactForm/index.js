@@ -86,14 +86,9 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
 
     setIsSubmitting(true);
 
-    const body = {
-      name,
-      email,
-      phone,
-      categoryId_id: categoryId || null,
-    };
-
-    await onSubmit({ body });
+    await onSubmit({
+      name, email, phone, categoryId,
+    });
 
     setIsSubmitting(false);
   }
