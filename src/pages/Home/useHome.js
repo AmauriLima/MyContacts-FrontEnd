@@ -14,8 +14,8 @@ export default function useHome() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [isLoadingDelete, setisLoadingDelete] = useState(false);
   const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
-  const [isLoadingDelete, setisLoadingDelete] = useState(null);
 
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
     (contact.name.toLowerCase()).includes(searchTerm.toLowerCase())
