@@ -20,7 +20,7 @@ export default function EditContact() {
 
   async function handleSubmit({ body }) {
     try {
-      const updatedContact = await ContactsService.updateContact({ body, id: 12789732179 });
+      const updatedContact = await ContactsService.updateContact({ body, id });
 
       setContactName(updatedContact.name);
 
