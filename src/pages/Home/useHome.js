@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import {
-  useEffect, useState, useMemo, useCallback,
+  useEffect, useState, useCallback, useMemo, useDeferredValue,
 } from 'react';
 
 import ContactsService from '../../services/ContactsService';
@@ -10,16 +10,18 @@ import toast from '../../utils/toast';
 export default function useHome() {
   const [contacts, setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState('asc');
-  const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isLoadingDelete, setisLoadingDelete] = useState(false);
   const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const deferredSearchTerm = useDeferredValue(searchTerm);
+
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
-    (contact.name.toLowerCase()).includes(searchTerm.toLowerCase())
-  )), [searchTerm, contacts]);
+    (contact.name.toLowerCase()).includes(deferredSearchTerm.toLowerCase())
+  )), [deferredSearchTerm, contacts]);
 
   const loadContacts = useCallback(async () => {
     try {
@@ -41,24 +43,26 @@ export default function useHome() {
     loadContacts();
   }, [loadContacts]);
 
-  function handleToggleOrderBy() {
+  const handleToggleOrderBy = useCallback(() => {
     setOrderBy(
       (prevState) => (prevState === 'asc' ? 'desc' : 'asc'),
     );
-  }
+  }, []);
 
   function handleChangeSearchTerm(event) {
-    setSearchTerm(event.target.value);
+    const { value } = event.target;
+
+    setSearchTerm(value);
   }
 
   function handleTryAgain() {
     loadContacts();
   }
 
-  function handleDeleteContact(contact) {
+  const handleDeleteContact = useCallback((contact) => {
     setIsDeleteModalVisible(true);
     setContactBeingDeleted(contact);
-  }
+  }, []);
 
   function handleCloseDeleteModal() {
     setIsDeleteModalVisible(false);
