@@ -6,11 +6,11 @@ import Spinner from '../Spinner';
 
 export default function Button(props) {
   const {
-    type,
-    disabled,
-    isLoading,
+    type = 'button',
+    disabled = false,
+    isLoading = false,
     children,
-    danger,
+    danger = false,
     onClick,
   } = props;
 
@@ -34,12 +34,4 @@ Button.propTypes = {
   danger: PropTypes.bool,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
-};
-
-Button.defaultProps = {
-  type: 'button',
-  disabled: false,
-  isLoading: false,
-  danger: false,
-  onClick: undefined,
 };
