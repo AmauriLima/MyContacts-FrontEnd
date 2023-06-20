@@ -3,7 +3,7 @@ import HttpClient from './utils/HttpClient';
 
 class ContactsService {
   constructor() {
-    this.httpClient = new HttpClient(process.env.api_url);
+    this.httpClient = new HttpClient(process.env.REACT_APP_API_URL);
   }
 
   async listContacts(orderBy, signal) {
